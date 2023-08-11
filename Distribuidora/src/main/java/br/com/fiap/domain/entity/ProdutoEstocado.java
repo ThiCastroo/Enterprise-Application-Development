@@ -1,19 +1,36 @@
 package br.com.fiap.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-public class ProdutoEstoque {
+@Entity
+@Table(name = "TB_ITEM", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_NR_SERIE_ITEM", columnNames = {"NR_SERIE"})
+})
+public class ProdutoEstocado {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_ITEM")
+    @SequenceGenerator(name = "SQ_ITEM", sequenceName = "SQ_ITEM")
+    @Column(name = "ID_ITEM")
     private Long id;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "ID_PRODUTO", referencedColumnName = "ID_PRODUTO", foreignKey = @ForeignKey(name = "FK_ITEM_PRODUTO"))
     private Produto produto;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "ID_DEPOSITO", referencedColumnName = "ID_DEPOSITO", foreignKey = @ForeignKey(name = "FK_ITEM_DEPOSITO"))
     private Deposito deposito;
+    @Column(name = "NR_SERIE", nullable = false)
     private String numeroDeSerie;
+    @Column(name = "DT_ENTRADA", nullable = false)
     private LocalDateTime entrada;
+    @Column(name = "DT_SAIDA")
     private LocalDateTime saida;
 
-    public ProdutoEstoque() {}
+    public ProdutoEstocado() {}
 
-    public ProdutoEstoque(Long id, Produto produto, Deposito deposito, String numeroDeSerie, LocalDateTime entrada, LocalDateTime saida) {
+    public ProdutoEstocado(Long id, Produto produto, Deposito deposito, String numeroDeSerie, LocalDateTime entrada, LocalDateTime saida) {
         this.id = id;
         this.produto = produto;
         this.deposito = deposito;
@@ -26,7 +43,7 @@ public class ProdutoEstoque {
         return id;
     }
 
-    public ProdutoEstoque setId(Long id) {
+    public ProdutoEstocado setId(Long id) {
         this.id = id;
         return this;
     }
@@ -35,7 +52,7 @@ public class ProdutoEstoque {
         return produto;
     }
 
-    public ProdutoEstoque setProduto(Produto produto) {
+    public ProdutoEstocado setProduto(Produto produto) {
         this.produto = produto;
         return this;
     }
@@ -44,7 +61,7 @@ public class ProdutoEstoque {
         return deposito;
     }
 
-    public ProdutoEstoque setDeposito(Deposito deposito) {
+    public ProdutoEstocado setDeposito(Deposito deposito) {
         this.deposito = deposito;
         return this;
     }
@@ -53,7 +70,7 @@ public class ProdutoEstoque {
         return numeroDeSerie;
     }
 
-    public ProdutoEstoque setNumeroDeSerie(String numeroDeSerie) {
+    public ProdutoEstocado setNumeroDeSerie(String numeroDeSerie) {
         this.numeroDeSerie = numeroDeSerie;
         return this;
     }
@@ -62,7 +79,7 @@ public class ProdutoEstoque {
         return entrada;
     }
 
-    public ProdutoEstoque setEntrada(LocalDateTime entrada) {
+    public ProdutoEstocado setEntrada(LocalDateTime entrada) {
         this.entrada = entrada;
         return this;
     }
@@ -71,7 +88,7 @@ public class ProdutoEstoque {
         return saida;
     }
 
-    public ProdutoEstoque setSaida(LocalDateTime saida) {
+    public ProdutoEstocado setSaida(LocalDateTime saida) {
         this.saida = saida;
         return this;
     }
