@@ -3,7 +3,9 @@ package br.com.fiap.domain.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "TB_AREA")
+@Table(name = "TB_AREA", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_NM_AREA", columnNames = {"NM_AREA"})
+})
 public class Area {
 
     @Id
@@ -11,7 +13,7 @@ public class Area {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_AREA")
     @SequenceGenerator(name = "SQ_AREA", sequenceName = "SQ_AREA")
     Long id;
-    @Column(name = "NM_AREA")
+    @Column(name = "NM_AREA", nullable = false)
     String nome;
     @Column(name = "DS_AREA")
     String descricao;
