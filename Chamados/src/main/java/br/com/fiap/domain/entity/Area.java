@@ -12,11 +12,11 @@ public class Area {
     @Column(name = "ID_AREA")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_AREA")
     @SequenceGenerator(name = "SQ_AREA", sequenceName = "SQ_AREA")
-    Long id;
+    private Long id;
     @Column(name = "NM_AREA", nullable = false)
-    String nome;
+    private String nome;
     @Column(name = "DS_AREA")
-    String descricao;
+    private String descricao;
 
     public Area() {}
 
